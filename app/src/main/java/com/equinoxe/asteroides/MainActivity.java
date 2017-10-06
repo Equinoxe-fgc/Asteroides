@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            lanzarPreferencias(null);
             return true;
         }
         if (id == R.id.acercaDe) {
@@ -32,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void lanzarPreferencias(View view) {
+        Intent i = new Intent(this,Preferencias.class);
+        startActivity(i);
     }
 
     public void lanzarAcercaDe(View view) {
