@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -29,14 +30,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/Arrancar" />
+                android:text="@string/Arrancar"
+                tools:ignore="ButtonStyle" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/Configurar" />
+                android:text="@string/Configurar"
+                tools:ignore="ButtonStyle" />
         </TableRow>
 
         <TableRow
@@ -48,14 +51,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/Acercade" />
+                android:text="@string/Acercade"
+                tools:ignore="ButtonStyle" />
 
             <Button
                 android:id="@+id/button4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/Salir" />
+                android:onClick="lanzarPuntuaciones"
+                android:text="@string/Puntuaciones"
+                tools:ignore="ButtonStyle" />
         </TableRow>
 
     </TableLayout>

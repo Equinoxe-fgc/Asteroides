@@ -6,4 +6,6 @@
     <string name="Acercade">Acerca de</string>
     <string name="Salir">Salir</string>
     <string name="TextoAcercaDe">Este programa ha sido desarrollado como ejemplo en el curso de Android para demostrar cómo se pueden lanzar nuevas actividades desde la actividad principal</string>
+    <string name="Puntuaciones">Puntuaciones</string>
+    <string name="No_Puntuaciones" >No hay puntuaciones</string>
 </resources>

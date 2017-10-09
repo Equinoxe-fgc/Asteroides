@@ -7,7 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.Vector;
+
 public class MainActivity extends AppCompatActivity {
+    public static AlmacenPuntuaciones almacen = new AlmacenPuntuacionesArray();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,5 +50,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void salir(View view) {
         finish();
+    }
+
+    public void lanzarPuntuaciones(View v) {
+        Intent i = new Intent(this, Puntuaciones.class);
+        startActivity(i);
     }
 }
