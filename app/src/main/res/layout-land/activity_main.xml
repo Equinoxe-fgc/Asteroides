@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/degradado"
     android:orientation="vertical">
 
 
@@ -30,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="lanzarJuego"
                 android:text="@string/Arrancar"
                 tools:ignore="ButtonStyle" />
 
@@ -38,6 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="lanzarPreferencias"
                 android:text="@string/Configurar"
                 tools:ignore="ButtonStyle" />
         </TableRow>
@@ -51,6 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="lanzarAcercaDe"
                 android:text="@string/Acercade"
                 tools:ignore="ButtonStyle" />
 

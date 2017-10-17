@@ -56,4 +56,9 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this, Puntuaciones.class);
         startActivity(i);
     }
+
+    public void lanzarJuego(View v) {
+        Intent i = new Intent(this, juego.class);
+        startActivity(i);
+    }
 }

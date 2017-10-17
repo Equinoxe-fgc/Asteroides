@@ -17,7 +17,11 @@
         </activity>
         <activity android:name=".AcercaDe" />
         <activity android:name=".Preferencias" />
-        <activity android:name=".Puntuaciones"></activity>
+        <activity android:name=".Puntuaciones" />
+        <activity android:name=".juego"
+                  android:screenOrientation="landscape"
+                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        </activity>
     </application>
 
 </manifest>
