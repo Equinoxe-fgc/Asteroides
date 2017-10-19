@@ -11,9 +11,11 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.PathShape;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.Vector;
+
 
 /**
  * Created by Equinoxe on 16/10/2017.
@@ -30,6 +32,13 @@ public class VistaJuego extends View {
     private Vector<Grafico> asteroides;
     private int numAsteroides = 5;
     private int numFragmentos = 3;
+
+    private ThreadJuego thread = new ThreadJuego();
+    private static int PERIODO_PROCESO = 50;
+    private long ultimoProceso = 0;
+
+    private float mX=0.0f, mY=0.0f;
+    private boolean disparo = false;
 
     public VistaJuego(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -93,6 +102,30 @@ public class VistaJuego extends View {
         }
     }
 
+    synchronized protected void actualizaFisica() {
+        long ahora = System.currentTimeMillis();
+        if (ultimoProceso + PERIODO_PROCESO > ahora) {
+            return;
+        }
+
+        double factorMov = (ahora - ultimoProceso) / PERIODO_PROCESO;
+        ultimoProceso = ahora;
+
+        nave.setAngulo((int)(nave.getAngulo() + giroNave * factorMov));
+        double nIncX = nave.getIncX() + aceleracionNave * Math.cos(Math.toRadians(nave.getAngulo())) * factorMov;
+        double nIncY = nave.getIncY() + aceleracionNave * Math.sin(Math.toRadians(nave.getAngulo())) * factorMov;
+
+        if (Math.hypot(nIncX, nIncY) <= MAX_VELOCIDAD_NAVE) {
+            nave.setIncX(nIncX);
+            nave.setIncY(nIncY);
+        }
+        nave.incrementaPos(factorMov);
+
+        for (Grafico asteroide: asteroides) {
+            asteroide.incrementaPos(factorMov);
+        }
+    }
+
     @Override
     protected void onSizeChanged(int ancho, int alto, int ancho_anter, int alto_anter) {
         super.onSizeChanged(ancho, alto, ancho_anter, alto_anter);
@@ -106,15 +139,64 @@ public class VistaJuego extends View {
                 asteroide.setCentY((int) (Math.random() * alto));
             } while (asteroide.distancia(nave) < (ancho+alto)/5);
         }
+
+        ultimoProceso = System.currentTimeMillis();
+        thread.start();
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    synchronized protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
         nave.dibujaGrafico(canvas);
         for (Grafico asteroide: asteroides) {
             asteroide.dibujaGrafico(canvas);
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        super.onTouchEvent(event);
+
+        float x = event.getX();
+        float y = event.getY();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                disparo = true;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float dx = Math.abs(x - mX);
+                float dy = Math.abs(y - mY);
+                if (dy < 6 && dx > 6) {
+                    giroNave = Math.round((x - mX) / 2);
+                    disparo = false;
+                } else if (dx < 6 && dy > 6) {
+                    if (mY - y > 0)
+                        aceleracionNave = Math.round((mY - y) / 25);
+                    disparo = false;
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                giroNave = 0;
+                aceleracionNave = 0;
+                if (disparo) {
+                    //activaMisil();
+                }
+                break;
+        }
+
+        mX = x;
+        mY = y;
+
+        return true;
+    }
+
+    class ThreadJuego extends Thread {
+        @Override
+        public void run() {
+            while (true) {
+                actualizaFisica();
+            }
         }
     }
 }
